@@ -1,7 +1,7 @@
 <!--
  * @Author: 黄灿民
  * @Date: 2021-02-08 22:19:26
- * @LastEditTime: 2021-02-09 16:10:27
+ * @LastEditTime: 2021-02-09 19:02:57
  * @LastEditors: 黄灿民
  * @Description: 
  * @FilePath: \cnode\src\views\home\HomeMain.vue
@@ -67,37 +67,52 @@
 <script lang="ts">
 import TopicsList from "@/components/topics-list/TopicsList.vue";
 import { getTopicsData } from "@/server";
-import { defineComponent, onMounted, ref, watchEffect } from "vue";
+import { defineComponent, onMounted, reactive, ref, watchEffect } from "vue";
 import { useRoute } from "vue-router";
 type TabList = "ask" | "share" | "job" | "good" | "dev" | "all";
+interface TopicsData {
+  ask: Array<object>;
+  share: Array<object>;
+  job: Array<object>;
+  good: Array<object>;
+  dev: Array<object>;
+  all: Array<object>;
+}
 export default defineComponent({
   components: { TopicsList },
   setup() {
     const route = useRoute();
     const isShowMark = ref(false);
-    const topicsData = ref();
+
+    const topicsData = reactive<TopicsData>({
+      ask:[],
+      share:[],
+      job:[],
+      good:[],
+      dev:[],
+      all:[],
+    });
     watchEffect(async () => {
+      const tab = (route.query.tab as TabList) || "all";
       isShowMark.value = true;
-      topicsData.value = await getTopicsData({
+      topicsData[tab] = await getTopicsData({
         limit: 40,
         mdrender: false,
         tab: (route.query.tab as TabList) || "all",
         page: 1,
       });
+      console.log("🚀 ~ file: HomeMain.vue ~ line 99 ~ watchEffect ~ topicsData[tab]", topicsData[tab])
       isShowMark.value = false;
     });
     onMounted(async () => {
+      const tab = (route.query.tab as TabList) || "all";
       isShowMark.value = true;
-      topicsData.value = await getTopicsData({
+      topicsData[tab] = await getTopicsData({
         limit: 40,
         mdrender: false,
         tab: (route.query.tab as TabList) || "all",
         page: 1,
       });
-      console.log(
-        "🚀 ~ file: HomeMain.vue ~ line 82 ~ watchEffect ~ topicsData.value",
-        topicsData.value
-      );
 
       isShowMark.value = false;
     });
