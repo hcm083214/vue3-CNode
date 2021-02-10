@@ -1,7 +1,7 @@
 <!--
  * @Author: 黄灿民
  * @Date: 2021-02-08 10:32:38
- * @LastEditTime: 2021-02-08 22:12:11
+ * @LastEditTime: 2021-02-10 10:54:09
  * @LastEditors: 黄灿民
  * @Description: 
  * @FilePath: \cnode\src\components\header\CNodeHeader.vue
@@ -42,20 +42,16 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from "vue";
+import { isLoginFn } from "@/util/common";
+import { defineComponent } from "vue";
 import { useStore } from "vuex";
 import SearchBox from "../search-box/SearchBox.vue";
 
 export default defineComponent({
   components: { SearchBox },
   setup() {
-    const userInfo = JSON.parse(localStorage.getItem("userInfo") as string);
     const store = useStore();
-    const isLogin = computed(
-      () =>
-        !!Object.keys(store.state.userInfo).length ||
-        !!Object.keys(userInfo).length
-    );
+    const isLogin = isLoginFn();
     const handleLogout = () => store.commit("saveUserInfo", {});
 
     return {

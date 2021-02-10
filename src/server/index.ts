@@ -1,7 +1,7 @@
 /*
  * @Author: 黄灿民
  * @Date: 2021-02-08 15:53:28
- * @LastEditTime: 2021-02-09 11:12:58
+ * @LastEditTime: 2021-02-09 22:00:22
  * @LastEditors: 黄灿民
  * @Description: 
  * @FilePath: \cnode\src\server\index.ts
@@ -56,5 +56,10 @@ interface TopicsParams {
 }
 export async function getTopicsData(params: TopicsParams) {
     const result =await instance.get('/topics', { params })
+    return result.data
+}
+
+export async function getTopicData(id: string) {
+    const result =await instance.get(`/topic/${id}`)
     return result.data
 }

@@ -104,6 +104,9 @@ a,abbr,address,article,aside,audio,b,blockquote,body,canvas,caption,cite,code,dd
   iframe {
     border: none;
   }
+  img{
+    width:100%;
+  }
   
   button,
   input,
