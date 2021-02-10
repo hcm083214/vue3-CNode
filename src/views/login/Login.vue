@@ -1,7 +1,7 @@
 <!--
  * @Author: 黄灿民
  * @Date: 2021-02-08 15:30:51
- * @LastEditTime: 2021-02-08 21:38:27
+ * @LastEditTime: 2021-02-10 16:29:55
  * @LastEditors: 黄灿民
  * @Description: 
  * @FilePath: \cnode\src\views\login\Login.vue
@@ -39,10 +39,12 @@ export default defineComponent({
     const router = useRouter();
     const saveUserInfo = (userInfo: object) =>
       store.commit("saveUserInfo", userInfo);
-    const accessToken = ref("");
+    const accessToken = ref(localStorage.getItem('accessToken') || '');
+    
     const handleLogin = async () => {
       const userInfo = await login(accessToken.value);
       saveUserInfo(userInfo);
+      localStorage.setItem('accessToken',accessToken.value)
       localStorage.setItem('userInfo',JSON.stringify(userInfo))
         router.push({
             name:'Home'

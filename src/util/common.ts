@@ -4,7 +4,7 @@ import { useStore } from "vuex";
 /*
  * @Author: 黄灿民
  * @Date: 2021-02-09 22:06:52
- * @LastEditTime: 2021-02-10 10:53:14
+ * @LastEditTime: 2021-02-10 15:09:16
  * @LastEditors: 黄灿民
  * @Description: 
  * @FilePath: \cnode\src\util\common.ts
@@ -101,7 +101,8 @@ export function isLoginFn(){
     const isLogin = computed(
       () =>
         !!Object.keys(store.state.userInfo).length ||
-        !!Object.keys(userInfo).length
+        (userInfo && !!Object.keys(userInfo).length) ||
+        false
     );
     return isLogin
 } 

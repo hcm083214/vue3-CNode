@@ -1,7 +1,7 @@
 <!--
  * @Author: 黄灿民
  * @Date: 2021-02-08 10:32:38
- * @LastEditTime: 2021-02-10 10:54:09
+ * @LastEditTime: 2021-02-10 16:17:51
  * @LastEditors: 黄灿民
  * @Description: 
  * @FilePath: \cnode\src\components\header\CNodeHeader.vue
@@ -42,8 +42,9 @@
 </template>
 
 <script lang="ts">
+import { getMessageCount } from "@/server";
 import { isLoginFn } from "@/util/common";
-import { defineComponent } from "vue";
+import { defineComponent, ref } from "vue";
 import { useStore } from "vuex";
 import SearchBox from "../search-box/SearchBox.vue";
 
@@ -52,11 +53,17 @@ export default defineComponent({
   setup() {
     const store = useStore();
     const isLogin = isLoginFn();
-    const handleLogout = () => store.commit("saveUserInfo", {});
-
+    const handleLogout = () => {
+      store.commit("saveUserInfo", {});
+      localStorage.removeItem('userInfo');
+      localStorage.removeItem('accessToken');
+    }
+    const messageCount = ref();
+    getMessageCount().then((res) => (messageCount.value = res));
     return {
       handleLogout,
       isLogin,
+      messageCount,
     };
   },
 });

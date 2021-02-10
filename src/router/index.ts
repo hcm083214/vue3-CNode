@@ -1,7 +1,7 @@
 /*
  * @Author: 黄灿民
  * @Date: 2021-02-08 10:08:23
- * @LastEditTime: 2021-02-10 10:07:21
+ * @LastEditTime: 2021-02-10 16:04:48
  * @LastEditors: 黄灿民
  * @Description: 
  * @FilePath: \cnode\src\router\index.ts
@@ -22,7 +22,12 @@ const routes: Array<RouteRecordRaw> = [
     component:()=>import('@/views/login/Login.vue')
   },
   {
-    path:'/user',
+    path:'/messages',
+    name:'Message',
+    component:()=>import('@/views/message/Message.vue')
+  },
+  {
+    path:'/user/:name',
     name:'User',
     component:()=>import('@/views/user/User.vue')
   },

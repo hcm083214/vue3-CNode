@@ -1,7 +1,7 @@
 /*
  * @Author: 黄灿民
  * @Date: 2021-02-08 15:53:28
- * @LastEditTime: 2021-02-09 22:00:22
+ * @LastEditTime: 2021-02-10 16:53:44
  * @LastEditors: 黄灿民
  * @Description: 
  * @FilePath: \cnode\src\server\index.ts
@@ -14,6 +14,18 @@ const instance = axios.create({
 })
 
 instance.interceptors.request.use((config) => {
+    const accessToken = localStorage.getItem('accessToken') as string
+    const defaultData = {
+        accesstoken: accessToken
+      };
+    
+      if( config.method === 'post' ) {
+        config.data = Object.assign(defaultData, config.data);
+      }
+    
+      if( config.method === 'get' ) {
+        config.params = Object.assign(defaultData, config.params);
+      }
     return config;
 })
 instance.interceptors.response.use(
@@ -40,12 +52,22 @@ instance.interceptors.response.use(
 
 interface LoginResult { success: boolean; loginname?: string; id?: number; avatar_url?: string }
 export async function login(token: string) {
-    const result =await instance.post<LoginResult>('/accesstoken', {
+    const result = await instance.post<LoginResult>('/accesstoken', {
         accesstoken: token
     })
     return result;
 }
 
+export async function getMessageCount(){
+    const result = await instance.get<number>('/message/count')
+    return result;
+}
+
+
+export async function getMessages(){
+    const result = await instance.get('/messages')
+    return result.data
+} 
 
 type TabList = 'ask' | 'share' | 'job' | 'good' | 'dev' | 'all';
 interface TopicsParams {
@@ -55,11 +77,23 @@ interface TopicsParams {
     mdrender: boolean;
 }
 export async function getTopicsData(params: TopicsParams) {
-    const result =await instance.get('/topics', { params })
+    const result = await instance.get('/topics', { params })
     return result.data
 }
 
 export async function getTopicData(id: string) {
-    const result =await instance.get(`/topic/${id}`)
+    const result = await instance.get(`/topic/${id}`)
     return result.data
+}
+interface TopicCollectParams {
+    topicId: string;
+}
+export async function topicCollect(params: TopicCollectParams) {
+    const result = await instance.post('/topic_collect/collect',  params )
+    return result;
+}
+
+export async function topicDeCollect(params: TopicCollectParams) {
+    const result = await instance.post('/topic_collect/de_collect',  params )
+    return result;
 }

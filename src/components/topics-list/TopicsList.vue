@@ -1,7 +1,7 @@
 <!--
  * @Author: 黄灿民
  * @Date: 2021-02-09 15:47:02
- * @LastEditTime: 2021-02-10 09:48:32
+ * @LastEditTime: 2021-02-10 15:57:54
  * @LastEditors: 黄灿民
  * @Description: 
  * @FilePath: \cnode\src\components\topics-list\TopicsList.vue
@@ -10,9 +10,7 @@
   <ul class="unique-topics-list">
     <li v-for="item in topics[tab]" :key="item.id">
       <div class="avatar">
-        <router-link
-          :to="{ name: 'User', params: { loginname: item.author.loginname } }"
-        >
+        <router-link :to="`/user/${item.author.loginname}`">
           <div class="img">
             <img
               :src="item.author.avatar_url"

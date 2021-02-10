@@ -1,7 +1,7 @@
 <!--
  * @Author: 黄灿民
  * @Date: 2021-02-09 16:04:57
- * @LastEditTime: 2021-02-10 11:11:33
+ * @LastEditTime: 2021-02-10 15:19:27
  * @LastEditors: 黄灿民
  * @Description: 
  * @FilePath: \cnode\src\views\topic\Topic.vue
@@ -31,7 +31,7 @@
               >
             </div>
             <div class="collection user-select-none" v-if="isLogin">
-              <button @click="handleCollectionButton">
+              <button @click="handleCollectionButton(detail.is_collect,detail.id)">
                 {{ detail.is_collect ? "取消收藏" : "收藏" }}
               </button>
             </div>
@@ -101,28 +101,41 @@
 </template>
 
 <script lang="ts">
-import { getTopicData } from "@/server";
+import { getTopicData, } from "@/server";
 import { defineComponent, ref } from "vue";
 import { useRoute } from "vue-router";
 import { timeFormat, tag, tabToName, isLoginFn } from "@/util/common.ts";
+import { handleCollectionButton } from "./collect";
 export default defineComponent({
   setup() {
     const route = useRoute();
     const detail = ref();
-    const loading = ref(false);
+    const loading = ref(true);
     const isLogin = isLoginFn();
     const userInfo = ref();
     userInfo.value =
       localStorage.getItem("userInfo") &&
       JSON.parse(localStorage.getItem("userInfo") as string);
     getTopicData(route.params.id as string).then((res) => {
+      loading.value = false;
       detail.value = res;
       console.log(
         "🚀 ~ file: Topic.vue ~ line 97 ~ getTopicData ~ detail.value",
         detail.value
       );
     });
-    return { detail, timeFormat, loading, tag, tabToName, isLogin, userInfo };
+
+
+    return {
+      detail,
+      timeFormat,
+      loading,
+      tag,
+      tabToName,
+      isLogin,
+      userInfo,
+      handleCollectionButton,
+    };
   },
 });
 </script>
