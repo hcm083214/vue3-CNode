@@ -1,7 +1,7 @@
 <!--
  * @Author: 黄灿民
  * @Date: 2021-02-09 16:04:57
- * @LastEditTime: 2021-02-10 15:19:27
+ * @LastEditTime: 2021-02-13 11:28:21
  * @LastEditors: 黄灿民
  * @Description: 
  * @FilePath: \cnode\src\views\topic\Topic.vue
@@ -31,18 +31,20 @@
               >
             </div>
             <div class="collection user-select-none" v-if="isLogin">
-              <button @click="handleCollectionButton(detail.is_collect,detail.id)">
+              <button
+                @click="handleCollectionButton(detail.is_collect, detail.id)"
+              >
                 {{ detail.is_collect ? "取消收藏" : "收藏" }}
               </button>
             </div>
-            <div
+            <!-- <div
               class="operation-edit"
               v-if="isLogin && detail.author_id === userInfo.id"
             >
               <router-link :to="`/release/${detail.id}`">
                 <Icon type="compose" title="编辑"></Icon>
               </router-link>
-            </div>
+            </div> -->
           </div>
         </div>
         <div class="content markdown-body" v-html="detail.content"></div>
@@ -57,61 +59,78 @@
                 <img :src="item.author.avatar_url" alt="头像" />
               </router-link>
             </div>
-            <div class="reply-right">
-              <div class="reply-author">
-                <router-link :to="`/user/${item.author.loginname}`">{{
-                  item.author.loginname
-                }}</router-link>
-                <span>{{ index + 1 }}楼•{{ timeFormat(item.create_at) }}</span>
-                <strong v-if="detail.author.loginname == item.author.loginname"
-                  >作者</strong
-                >
-              </div>
-              <div class="operation user-select-none">
-                <div>
-                  <Icon
-                    :type="item.is_uped ? 'ios-heart' : 'ios-heart-outline'"
-                    @click="handleLikeButton(item.id, item.author, index)"
-                  />
-                  <em>{{ item.ups.length }}</em>
+            <div class="right">
+              <div class="reply-right">
+                <div class="reply-author">
+                  <router-link :to="`/user/${item.author.loginname}`">{{
+                    item.author.loginname
+                  }}</router-link>
+                  <span
+                    >{{ index + 1 }}楼•{{ timeFormat(item.create_at) }}</span
+                  >
+                  <strong
+                    v-if="detail.author.loginname == item.author.loginname"
+                    >作者</strong
+                  >
                 </div>
-                <div @click="replyOthers(item.author.loginname)" v-if="isLogin">
-                  <Icon type="reply"></Icon>
+                <div class="operation user-select-none">
+                  <div>
+                    <span class="like" @click="handleLikeButton(item.id, index)"
+                      >👍
+                      <!-- <svg class="icon" aria-hidden="true">
+                        <use xlink:href="#icon-dianzan"></use>
+                      </svg> -->
+                    </span>
+                    <!-- <Icon  :type="item.is_uped ? 'ios-heart' : 'ios-heart-outline'"/> -->
+                    <em>{{ item.ups.length }}</em>
+                  </div>
+                  <div
+                    @click="replyOthers(item.author.loginname)"
+                    v-if="isLogin"
+                  >
+                    ◀
+                    <!-- <svg class="icon" aria-hidden="true">
+                      <use xlink:href="#icon-huifu"></use>
+                    </svg> -->
+                  </div>
                 </div>
               </div>
+
+              <div
+                class="reply-content markdown-body"
+                v-html="item.content"
+              ></div>
             </div>
-            <div
-              class="reply-content markdown-body"
-              v-html="item.content"
-            ></div>
           </li>
         </ul>
       </div>
       <!-- 新建评论 -->
-      <!-- <div class="insert-reply" :class="{hidden: !isLogin}">
+      <div class="insert-reply" :class="{ hidden: !isLogin }">
         <div class="tip">添加回复</div>
         <textarea id="markdown-editor"></textarea>
         <div class="reply-btn">
-          <button type="button" @click="insertReply">{{ insertBtnText }}</button>
+          <button type="button" @click="insertReply">
+            {{ insertBtnText }}
+          </button>
         </div>
-      </div> -->
+      </div>
     </div>
     <!-- <Sidebar :author="detail.author" from="topic" /> -->
   </section>
 </template>
 
 <script lang="ts">
-import { getTopicData, } from "@/server";
+import { getTopicData, likeServe } from "@/server";
 import { defineComponent, ref } from "vue";
 import { useRoute } from "vue-router";
 import { timeFormat, tag, tabToName, isLoginFn } from "@/util/common.ts";
-import { handleCollectionButton } from "./collect";
+import collect from "./collect";
 export default defineComponent({
   setup() {
     const route = useRoute();
     const detail = ref();
     const loading = ref(true);
-    const isLogin = isLoginFn();
+
     const userInfo = ref();
     userInfo.value =
       localStorage.getItem("userInfo") &&
@@ -125,6 +144,24 @@ export default defineComponent({
       );
     });
 
+    const isLogin = isLoginFn();
+
+    const { handleCollectionButton } = collect;
+    const handleLikeButton = (id: string, index: string) => {
+      likeServe(id).then((res) => {
+        // eslint-disable-next-line @typescript-eslint/camelcase
+        detail.value.replies[index].is_uped = !detail.value.replies[index]
+          .is_uped;
+        detail.value.replies[index].is_uped
+          ? detail.value.replies[index].ups.push(Date.now())
+          : detail.value.replies[index].ups.pop();
+      });
+    };
+
+    const insertBtnText = ref('回复');
+    const replyOthers = ()=>{
+      //todos 新建评论待完成
+    }
 
     return {
       detail,
@@ -135,12 +172,16 @@ export default defineComponent({
       isLogin,
       userInfo,
       handleCollectionButton,
+      handleLikeButton,
+      replyOthers,
+      insertBtnText
     };
   },
 });
 </script>
 
 <style lang="scss" scoped>
+@import "@/assets/mixin.scss";
 .topic {
   .detail {
     position: relative;
@@ -254,84 +295,88 @@ export default defineComponent({
   .reply {
     margin-top: 15px;
     border-radius: 3px;
-
-    li {
-      padding: 10px 10px 30px 10px;
-      overflow: hidden;
-      background: #fff;
-    }
-
     .reply-count {
       padding: 10px;
       background: #f6f6f6;
     }
-
-    .avatar {
-      float: left;
-
-      img {
-        width: 30px;
-        height: 30px;
-        background: #f7f7f7;
-        object-fit: cover;
-        border-radius: 3px;
-      }
-    }
-
-    .reply-author {
-      float: left;
-
-      a {
-        font-size: 12px;
-        color: #000;
-      }
-
-      span {
-        margin-left: 5px;
-        font-size: 12px;
-        color: #08c;
-      }
-
-      strong {
-        margin-left: 5px;
-        font-size: 12px;
-        background: #80bd01;
-        color: #fff;
-        padding: 1px;
-        border-radius: 1px;
-        font-weight: bold;
-      }
-    }
-
-    .reply-right {
-      float: left;
-      width: calc(100% - 40px);
+    li {
+      padding: 10px 10px 30px 10px;
       overflow: hidden;
-      margin: 0 0 0 10px;
-    }
+      background: #fff;
+      @include flex();
+      justify-content: flex-start;
 
-    .operation {
-      float: right;
-
-      i {
-        cursor: pointer;
-        font-size: 16px;
-        vertical-align: middle;
-      }
-
-      em {
-        margin-left: 3px;
-      }
-
-      > div {
+      .avatar {
         float: left;
-        margin-left: 7px;
+        width: 30px;
+        overflow: hidden;
+        img {
+          width: 30px;
+          height: 30px;
+          background: #f7f7f7;
+          object-fit: cover;
+          border-radius: 3px;
+        }
       }
-    }
+      .right {
+        width: calc(100% - 30px);
+        .reply-right {
+          float: left;
+          width: 100%;
+          overflow: hidden;
+          padding: 0 10px 0 10px;
+          @include flex();
+          justify-content: space-between;
+          .reply-author {
+            float: left;
 
-    .reply-content {
-      clear: left;
-      padding-left: 40px;
+            a {
+              font-size: 12px;
+              color: #000;
+            }
+
+            span {
+              margin-left: 5px;
+              font-size: 12px;
+              color: #08c;
+            }
+
+            strong {
+              margin-left: 5px;
+              font-size: 12px;
+              background: #80bd01;
+              color: #fff;
+              padding: 1px;
+              border-radius: 1px;
+              font-weight: bold;
+            }
+          }
+
+          .operation {
+            float: right;
+
+            i {
+              cursor: pointer;
+              font-size: 16px;
+              vertical-align: middle;
+            }
+
+            em {
+              margin-left: 3px;
+            }
+
+            > div {
+              float: left;
+              margin-left: 7px;
+            }
+          }
+        }
+      }
+
+      .reply-content {
+        clear: left;
+        padding-left: 15px;
+      }
     }
   }
 

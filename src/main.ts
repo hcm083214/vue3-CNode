@@ -2,7 +2,7 @@
 /*
  * @Author: 黄灿民
  * @Date: 2021-02-08 10:08:23
- * @LastEditTime: 2021-02-08 15:51:50
+ * @LastEditTime: 2021-02-11 16:15:24
  * @LastEditors: 黄灿民
  * @Description: 
  * @FilePath: \cnode\src\main.ts
@@ -12,7 +12,7 @@ import App from './App.vue'
 import router from './router'
 import 'element3/lib/theme-chalk/index.css'
 import '@/assets/index.css'
-
+// import '@/assets/icon/iconfont.js'
 
 import { ElContainer, ElHeader,
     ElFooter,ElMain, } from 'element3'

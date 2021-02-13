@@ -1,7 +1,7 @@
 <!--
  * @Author: 黄灿民
  * @Date: 2021-02-10 16:02:29
- * @LastEditTime: 2021-02-10 17:06:11
+ * @LastEditTime: 2021-02-10 19:53:32
  * @LastEditors: 黄灿民
  * @Description: 
  * @FilePath: \cnode\src\views\message\Message.vue
@@ -35,8 +35,6 @@ export default defineComponent({
   setup() {
     const message = ref();
     getMessages().then((res) => (message.value = res));
-    console.log("🚀 ~ file: Message.vue ~ line 37 ~ setup ~ message", message)
-
     return { message };
   },
 });

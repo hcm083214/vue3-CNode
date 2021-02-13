@@ -1,7 +1,7 @@
 /*
  * @Author: 黄灿民
  * @Date: 2021-02-08 15:53:28
- * @LastEditTime: 2021-02-10 16:53:44
+ * @LastEditTime: 2021-02-13 10:50:57
  * @LastEditors: 黄灿民
  * @Description: 
  * @FilePath: \cnode\src\server\index.ts
@@ -95,5 +95,14 @@ export async function topicCollect(params: TopicCollectParams) {
 
 export async function topicDeCollect(params: TopicCollectParams) {
     const result = await instance.post('/topic_collect/de_collect',  params )
+    return result;
+}
+
+interface LikeServeResult{
+    success: boolean;
+    action: string;
+}
+export async function likeServe(id: string){
+    const result = await instance.post<LikeServeResult>(`/reply/${id}/ups`)
     return result;
 }
