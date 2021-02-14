@@ -1,7 +1,7 @@
 <!--
  * @Author: 黄灿民
  * @Date: 2021-02-13 13:29:49
- * @LastEditTime: 2021-02-14 10:35:49
+ * @LastEditTime: 2021-02-14 11:06:27
  * @LastEditors: 黄灿民
  * @Description: 
  * @FilePath: \cnode\src\components\siderbar\SideBar.vue
@@ -25,7 +25,7 @@
             >
           </div>
           <div class="publish-topic">
-            <router-link to="/release/create">发布话题</router-link>
+            <router-link to="/create">发布话题</router-link>
           </div>
         </div>
         <div class="tourist-box" v-else>
@@ -78,15 +78,9 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const path = location.pathname;
-    console.log("🚀 ~ file: SideBar.vue ~ line 63 ~ setup ~ path",props.author);
     const isLogin = isLoginFn();
     const userInfo = ref();
     userInfo.value = JSON.parse(localStorage.getItem("userInfo") as string);
-    console.log(
-      "🚀 ~ file: SideBar.vue ~ line 65 ~ setup ~ userInfo.value",
-      userInfo.value
-    );
     return {
       isLogin,
       userInfo,

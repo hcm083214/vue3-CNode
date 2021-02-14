@@ -1,7 +1,7 @@
 /*
  * @Author: 黄灿民
  * @Date: 2021-02-08 10:08:23
- * @LastEditTime: 2021-02-14 10:33:54
+ * @LastEditTime: 2021-02-14 11:13:22
  * @LastEditors: 黄灿民
  * @Description: 
  * @FilePath: \cnode\src\router\index.ts
@@ -35,6 +35,11 @@ const routes: Array<RouteRecordRaw> = [
     path:'/topic/:id',
     name:'Topic',
     component:()=>import('@/views/topic/Topic.vue')
+  },
+  {
+    path:'/create',
+    name:"Create",
+    component:()=>import('@/views/create/Create.vue')
   }
   // {
   //   path: '/',
