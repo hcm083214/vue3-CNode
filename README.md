@@ -11,15 +11,15 @@
       3. token合法，不是登录页直接放行
    2. 不需要登录直接放行
 
-## nav标签选中
+## nav标签
 
-利用router-link的query属性去判断，监听route的变化去调用数据
+利用router-link的query属性去判断，通过watchEffect监听route的变化去调用数据
 
 ```html
-        <router-link
-          :to="{ name: 'Home', query: { tab: 'dev' } }"
-          :class="{ active: $route.query.tab == 'dev' }"
-          >客户端测试</router-link
-        >
+<router-link
+  :to="{ name: 'Home', query: { tab: 'dev' } }"
+  :class="{ active: $route.query.tab == 'dev' }"
+>客户端测试
+</router-link>
 ```
 

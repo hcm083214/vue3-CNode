@@ -1,7 +1,7 @@
 /*
  * @Author: 黄灿民
  * @Date: 2021-02-08 10:08:23
- * @LastEditTime: 2021-02-14 11:13:22
+ * @LastEditTime: 2021-02-14 16:20:41
  * @LastEditors: 黄灿民
  * @Description: 
  * @FilePath: \cnode\src\router\index.ts
@@ -40,7 +40,13 @@ const routes: Array<RouteRecordRaw> = [
     path:'/create',
     name:"Create",
     component:()=>import('@/views/create/Create.vue')
-  }
+  },
+  { path: '/:pathMatch(.*)*', name: 'not-found', component: () => import("@/views/404/404.vue"), },
+  // {
+  //   name: 'NotMatch',
+  //   path: '*',
+  //   component: () => import("@/views/404/404.vue"),
+  // }
   // {
   //   path: '/',
   //   name: 'Home',

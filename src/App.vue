@@ -1,7 +1,7 @@
 <!--
  * @Author: 黄灿民
  * @Date: 2021-02-08 10:08:23
- * @LastEditTime: 2021-02-13 14:14:41
+ * @LastEditTime: 2021-02-14 14:00:02
  * @LastEditors: 黄灿民
  * @Description: 
  * @FilePath: \cnode\src\App.vue
@@ -46,7 +46,7 @@ export default defineComponent({
   margin: 0 auto;
   margin-top: 15px;
   @include flex();
-  justify-content: flex-start;
+  justify-content: center;
   align-items: flex-start;
 }
 </style>

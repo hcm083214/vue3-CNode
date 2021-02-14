@@ -1,7 +1,7 @@
 <!--
  * @Author: 黄灿民
  * @Date: 2021-02-09 16:04:57
- * @LastEditTime: 2021-02-14 11:02:02
+ * @LastEditTime: 2021-02-14 16:22:31
  * @LastEditors: 黄灿民
  * @Description: 
  * @FilePath: \cnode\src\views\topic\Topic.vue
@@ -37,14 +37,15 @@
                 {{ detail.is_collect ? "取消收藏" : "收藏" }}
               </button>
             </div>
-            <!-- <div
+            <div
               class="operation-edit"
               v-if="isLogin && detail.author_id === userInfo.id"
             >
-              <router-link :to="`/release/${detail.id}`">
-                <Icon type="compose" title="编辑"></Icon>
+              <router-link :to="{name:'Create', query:{id:detail.id}}">
+                <!-- <Icon type="compose" title="编辑"></Icon> -->
+                编辑
               </router-link>
-            </div> -->
+            </div>
           </div>
         </div>
         <div class="content markdown-body" v-html="detail.content"></div>
@@ -141,10 +142,10 @@ export default defineComponent({
     getTopicData(route.params.id as string).then((res) => {
       loading.value = false;
       detail.value = res;
-      console.log(
-        "🚀 ~ file: Topic.vue ~ line 97 ~ getTopicData ~ detail.value",
-        detail.value
-      );
+      // console.log(
+      //   "🚀 ~ file: Topic.vue ~ line 97 ~ getTopicData ~ detail.value",
+      //   detail.value
+      // );
     });
 
     const isLogin = isLoginFn();

@@ -1,7 +1,7 @@
 <!--
  * @Author: 黄灿民
  * @Date: 2021-02-14 11:06:45
- * @LastEditTime: 2021-02-14 11:50:50
+ * @LastEditTime: 2021-02-14 16:53:57
  * @LastEditors: 黄灿民
  * @Description: 新建话题
  * @FilePath: \cnode\src\views\create\Create.vue
@@ -12,7 +12,7 @@
       <div class="top">
         <router-link to="/">主页</router-link>
         <em> / </em>
-        <span>{{ currentStatus=='create' ? "发布话题" : "编辑话题" }}</span>
+        <span>{{ currentStatus == "create" ? "发布话题" : "编辑话题" }}</span>
       </div>
       <div class="select-tab">
         <span>选择版块：</span>
@@ -27,10 +27,10 @@
         <input v-model="title" placeholder="标题字数 10字以上" />
       </div>
       <div class="editor">
-        <textarea id="markdown-editor"></textarea>
+        <textarea id="markdown-editor" v-model="content"></textarea>
         <div class="release-btn">
           <button @click="releaseTopics">
-            {{ currentStatus=='create' ? "发布" : "更新" }}
+            {{ currentStatus == "create" ? "发布" : "更新" }}
           </button>
         </div>
       </div>
@@ -71,16 +71,66 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from "vue";
+import { createTopicServe, editTopicServe, getTopicData } from "@/server";
+import { defineComponent, ref, watchEffect } from "vue";
+import { useRoute, useRouter } from "vue-router";
 
 export default defineComponent({
   setup() {
-      const currentStatus = ref('create');
-      const title = ref('')
-      const releaseTopics = ()=>{
-          1
+    const currentStatus = ref("create");
+    const title = ref("");
+    const tab = ref("dev");
+    const content = ref("");
+    const route = useRoute();
+    const topicId = ref("");
+    const router = useRouter();
+    watchEffect(() => {
+      topicId.value = route.query.id as string;
+      if (!topicId.value) return;
+      currentStatus.value = "edit";
+      getTopicData(topicId.value).then((res) => {
+        console.log(
+          "🚀 ~ file: Create.vue ~ line 91 ~ getTopicData ~ res",
+          res
+        );
+        content.value = res.content;
+        title.value = res.title;
+      });
+    });
+
+    const releaseTopics = () => {
+      if (currentStatus.value == "create") {
+        createTopicServe({
+          title: title.value,
+          tab: tab.value,
+          content: content.value,
+        }).then((res) => {
+          router.push({
+            name: "Home",
+            query: {
+              tab: "dev",
+            },
+          });
+        });
+      } else if (currentStatus.value == "edit") {
+        console.log("edit");
+        editTopicServe({
+          // eslint-disable-next-line @typescript-eslint/camelcase
+          topic_id: topicId.value,
+          title: title.value,
+          tab: tab.value,
+          content: content.value,
+        }).then((res) => {
+          router.push({
+            name: "Home",
+            query: {
+              tab: "dev",
+            },
+          });
+        });
       }
-    return {currentStatus,title,releaseTopics};
+    };
+    return { currentStatus, title, releaseTopics, tab, content };
   },
 });
 </script>
@@ -88,59 +138,70 @@ export default defineComponent({
 .release {
   .release-left {
     background: #fff;
-  }
 
-  .top {
-    padding: 10px;
-    background: #f6f6f6;
+    .top {
+      padding: 10px;
+      background: #f6f6f6;
 
-    a {
-      color: #80bd01;
+      a {
+        color: #80bd01;
 
-      &:hover {
-        text-decoration: underline;
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+
+      em {
+        color: #ccc;
       }
     }
 
-    em {
-      color: #ccc;
+    .select-tab {
+      padding: 10px;
     }
-  }
 
-  .select-tab {
-    padding: 10px;
-  }
+    .title {
+      margin: 0 10px 10px 10px;
+      input {
+        width: 90%;
+        outline: none;
+        padding: 10px;
+        border: 1px solid #e1e1e1;
+        color: #778087;
+        transition: border 0.5s;
+      }
+      input:focus {
+        border: 1px solid #409eff;
+      }
+    }
 
-  .title {
-    margin: 0 10px 10px 10px;
-  }
+    .release-btn {
+      padding: 0 0 10px 10px;
 
-  .release-btn {
-    padding: 0 0 10px 10px;
-
-    button {
-      position: relative;
-      color: #fff;
-      background: #08c;
-      border-radius: 3px;
-      padding: 5px 10px;
-      font-weight: 500;
-      border: none;
-
-      &:after {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
+      button {
+        position: relative;
+        color: #fff;
+        background: #08c;
         border-radius: 3px;
-        background: #000;
-        opacity: 0;
-      }
+        padding: 5px 10px;
+        font-weight: 500;
+        border: none;
 
-      &:active:after {
-        opacity: 0.1;
+        &:after {
+          content: "";
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          border-radius: 3px;
+          background: #000;
+          opacity: 0;
+        }
+
+        &:active:after {
+          opacity: 0.1;
+        }
       }
     }
   }
