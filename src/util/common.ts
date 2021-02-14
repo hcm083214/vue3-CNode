@@ -4,7 +4,7 @@ import { useStore } from "vuex";
 /*
  * @Author: 黄灿民
  * @Date: 2021-02-09 22:06:52
- * @LastEditTime: 2021-02-10 15:09:16
+ * @LastEditTime: 2021-02-13 14:38:30
  * @LastEditors: 黄灿民
  * @Description: 
  * @FilePath: \cnode\src\util\common.ts
@@ -98,7 +98,7 @@ export function tabToName(tab: string) {
 export function isLoginFn(){
     const userInfo = JSON.parse(localStorage.getItem("userInfo") as string);
     const store = useStore();
-    const isLogin = computed(
+    const isLogin = computed<boolean>(
       () =>
         !!Object.keys(store.state.userInfo).length ||
         (userInfo && !!Object.keys(userInfo).length) ||

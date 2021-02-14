@@ -1,7 +1,7 @@
 <!--
  * @Author: 黄灿民
  * @Date: 2021-02-09 16:04:57
- * @LastEditTime: 2021-02-13 11:28:21
+ * @LastEditTime: 2021-02-14 11:02:02
  * @LastEditors: 黄灿民
  * @Description: 
  * @FilePath: \cnode\src\views\topic\Topic.vue
@@ -115,8 +115,9 @@
         </div>
       </div>
     </div>
-    <!-- <Sidebar :author="detail.author" from="topic" /> -->
+    
   </section>
+  <side-bar :author="detail.author" from="topic" v-if="detail"/>
 </template>
 
 <script lang="ts">
@@ -125,7 +126,9 @@ import { defineComponent, ref } from "vue";
 import { useRoute } from "vue-router";
 import { timeFormat, tag, tabToName, isLoginFn } from "@/util/common.ts";
 import collect from "./collect";
+import SideBar from "@/components/siderbar/SideBar.vue";
 export default defineComponent({
+  components: { SideBar },
   setup() {
     const route = useRoute();
     const detail = ref();
@@ -158,10 +161,10 @@ export default defineComponent({
       });
     };
 
-    const insertBtnText = ref('回复');
-    const replyOthers = ()=>{
+    const insertBtnText = ref("回复");
+    const replyOthers = () => {
       //todos 新建评论待完成
-    }
+    };
 
     return {
       detail,
@@ -174,7 +177,7 @@ export default defineComponent({
       handleCollectionButton,
       handleLikeButton,
       replyOthers,
-      insertBtnText
+      insertBtnText,
     };
   },
 });

@@ -1,7 +1,7 @@
 <!--
  * @Author: 黄灿民
  * @Date: 2021-02-08 22:19:26
- * @LastEditTime: 2021-02-10 10:23:53
+ * @LastEditTime: 2021-02-14 10:31:33
  * @LastEditors: 黄灿民
  * @Description: 
  * @FilePath: \cnode\src\views\home\Home.vue
@@ -52,6 +52,13 @@
         <topics-list :topics="topicsData" />
       </div>
       <div class="pagination-box">
+        <el-pagination
+          background
+          layout="prev, pager, next"
+          @current-change="handleCurrentChange"
+          v-model:currentPage="currentPage"
+        >
+        </el-pagination>
         <!-- <Page 
           :total="total" 
           :page-size="40" 
@@ -62,9 +69,11 @@
     </div>
     <!-- <Sidebar /> -->
   </section>
+  <side-bar />
 </template>
 
 <script lang="ts">
+import SideBar from "@/components/siderbar/SideBar.vue";
 import TopicsList from "@/components/topics-list/TopicsList.vue";
 import { getTopicsData } from "@/server";
 import { defineComponent, onMounted, reactive, ref, watchEffect } from "vue";
@@ -79,18 +88,18 @@ interface TopicsData {
   all: Array<object>;
 }
 export default defineComponent({
-  components: { TopicsList },
+  components: { TopicsList, SideBar },
   setup() {
     const route = useRoute();
     const isShowMark = ref(false);
-
+    const currentPage = ref(1);
     const topicsData = reactive<TopicsData>({
-      ask:[],
-      share:[],
-      job:[],
-      good:[],
-      dev:[],
-      all:[],
+      ask: [],
+      share: [],
+      job: [],
+      good: [],
+      dev: [],
+      all: [],
     });
     watchEffect(async () => {
       const tab = (route.query.tab as TabList) || "all";
@@ -99,9 +108,9 @@ export default defineComponent({
         limit: 40,
         mdrender: false,
         tab: (route.query.tab as TabList) || "all",
-        page: 1,
+        page: currentPage.value,
       });
-      console.log("🚀 ~ file: HomeMain.vue ~ line 99 ~ watchEffect ~ topicsData[tab]", topicsData[tab])
+      // console.log("🚀 ~ file: HomeMain.vue ~ line 99 ~ watchEffect ~ topicsData[tab]", topicsData[tab])
       isShowMark.value = false;
     });
     onMounted(async () => {
@@ -116,7 +125,12 @@ export default defineComponent({
 
       isShowMark.value = false;
     });
-    return { isShowMark, topicsData };
+
+    const handleCurrentChange = (page: number) => {
+      console.log(`当前页: ${page}`);
+      currentPage.value = page;
+    };
+    return { isShowMark, topicsData, handleCurrentChange,currentPage };
   },
 });
 </script>
@@ -124,7 +138,6 @@ export default defineComponent({
 <style lang="scss" scoped>
 @import "@/assets/mixin.scss";
 .index-section {
-  
   .index-container {
     background: #fff;
     box-shadow: 0 0 8px #ccc;

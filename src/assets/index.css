@@ -268,3 +268,11 @@ em {
   fill: currentColor;
   overflow: hidden;
 }
+
+.index-section{
+  flex:1 1 auto;  
+}
+.side-bar{
+  width: 290px;
+  margin-left:15px;
+}

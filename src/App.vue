@@ -1,7 +1,7 @@
 <!--
  * @Author: 黄灿民
  * @Date: 2021-02-08 10:08:23
- * @LastEditTime: 2021-02-10 10:22:01
+ * @LastEditTime: 2021-02-13 14:14:41
  * @LastEditors: 黄灿民
  * @Description: 
  * @FilePath: \cnode\src\App.vue
@@ -34,6 +34,7 @@ export default defineComponent({
 
 
 <style lang="scss">
+@import '@/assets/mixin.scss';
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -44,6 +45,8 @@ export default defineComponent({
   width: 90%;
   margin: 0 auto;
   margin-top: 15px;
-
+  @include flex();
+  justify-content: flex-start;
+  align-items: flex-start;
 }
 </style>
