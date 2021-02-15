@@ -1,7 +1,7 @@
 /*
  * @Author: 黄灿民
  * @Date: 2021-02-14 14:17:36
- * @LastEditTime: 2021-02-14 14:39:39
+ * @LastEditTime: 2021-02-15 13:57:54
  * @LastEditors: 黄灿民
  * @Description: APIList
  * @FilePath: \cnode\src\server\api.ts
@@ -15,6 +15,7 @@
     topicCollect:'/topic_collect/collect',
     cancelTopicCollect:'/topic_collect/de_collect',
     createTopic:'/topics',
-    updateTopic:'/topics/update'
+    updateTopic:'/topics/update',
+    user:'/user/'
 }
 export default API;

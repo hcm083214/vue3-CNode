@@ -1,7 +1,7 @@
 <!--
  * @Author: 黄灿民
  * @Date: 2021-02-14 11:06:45
- * @LastEditTime: 2021-02-14 16:53:57
+ * @LastEditTime: 2021-02-14 17:54:03
  * @LastEditors: 黄灿民
  * @Description: 新建话题
  * @FilePath: \cnode\src\views\create\Create.vue
@@ -89,10 +89,10 @@ export default defineComponent({
       if (!topicId.value) return;
       currentStatus.value = "edit";
       getTopicData(topicId.value).then((res) => {
-        console.log(
-          "🚀 ~ file: Create.vue ~ line 91 ~ getTopicData ~ res",
-          res
-        );
+        // console.log(
+        //   "🚀 ~ file: Create.vue ~ line 91 ~ getTopicData ~ res",
+        //   res
+        // );
         content.value = res.content;
         title.value = res.title;
       });
@@ -104,6 +104,7 @@ export default defineComponent({
           title: title.value,
           tab: tab.value,
           content: content.value,
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         }).then((res) => {
           router.push({
             name: "Home",
@@ -120,6 +121,7 @@ export default defineComponent({
           title: title.value,
           tab: tab.value,
           content: content.value,
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
         }).then((res) => {
           router.push({
             name: "Home",

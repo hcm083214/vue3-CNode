@@ -1,7 +1,7 @@
 /*
  * @Author: 黄灿民
  * @Date: 2021-02-08 15:53:28
- * @LastEditTime: 2021-02-14 16:11:38
+ * @LastEditTime: 2021-02-15 13:51:51
  * @LastEditors: 黄灿民
  * @Description: 
  * @FilePath: \cnode\src\server\index.ts
@@ -126,5 +126,10 @@ interface EditTopicParams {
 }
 export async function editTopicServe(params: EditTopicParams) {
     const result = await instance.post(API.createTopic, params);
+    return result;
+}
+
+export async function getUserInfoServe(params: string){
+    const result = await instance.get(`${API.user}${params}`)
     return result;
 }

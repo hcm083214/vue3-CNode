@@ -1,7 +1,7 @@
 <!--
  * @Author: 黄灿民
  * @Date: 2021-02-09 16:04:57
- * @LastEditTime: 2021-02-14 16:22:31
+ * @LastEditTime: 2021-02-14 17:04:36
  * @LastEditors: 黄灿民
  * @Description: 
  * @FilePath: \cnode\src\views\topic\Topic.vue
@@ -152,6 +152,7 @@ export default defineComponent({
 
     const { handleCollectionButton } = collect;
     const handleLikeButton = (id: string, index: string) => {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       likeServe(id).then((res) => {
         // eslint-disable-next-line @typescript-eslint/camelcase
         detail.value.replies[index].is_uped = !detail.value.replies[index]
