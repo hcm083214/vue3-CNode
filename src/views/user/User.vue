@@ -4,7 +4,7 @@
 <!--
  * @Author: 黄灿民
  * @Date: 2021-02-09 16:01:55
- * @LastEditTime: 2021-02-15 14:44:49
+ * @LastEditTime: 2021-02-15 16:26:07
  * @LastEditors: 黄灿民
  * @Description: 
  * @FilePath: \cnode\src\views\user\User.vue
@@ -54,6 +54,7 @@ import SideBar from "@/components/siderbar/SideBar.vue";
 import UserTopicList from "@/components/user-topic-list/UserTopicList.vue";
 
 export default defineComponent({
+  name:'User',
   components: { SideBar, UserTopicList },
   setup() {
     const route = useRoute();

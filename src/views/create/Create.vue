@@ -1,7 +1,7 @@
 <!--
  * @Author: 黄灿民
  * @Date: 2021-02-14 11:06:45
- * @LastEditTime: 2021-02-14 17:54:03
+ * @LastEditTime: 2021-02-15 16:23:12
  * @LastEditors: 黄灿民
  * @Description: 新建话题
  * @FilePath: \cnode\src\views\create\Create.vue
@@ -76,6 +76,7 @@ import { defineComponent, ref, watchEffect } from "vue";
 import { useRoute, useRouter } from "vue-router";
 
 export default defineComponent({
+  name:'Create',
   setup() {
     const currentStatus = ref("create");
     const title = ref("");

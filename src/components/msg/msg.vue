@@ -1,7 +1,7 @@
 <!--
  * @Author: 黄灿民
  * @Date: 2021-02-10 16:39:28
- * @LastEditTime: 2021-02-10 17:03:52
+ * @LastEditTime: 2021-02-15 16:21:24
  * @LastEditors: 黄灿民
  * @Description: 
  * @FilePath: \cnode\src\components\msg\msg.vue
@@ -40,6 +40,7 @@
 import { defineComponent ,PropType} from "vue";
 
 export default defineComponent({
+  name:'Msg',
   props: {
     readMessages: {
       type: Array as PropType<object[]>,

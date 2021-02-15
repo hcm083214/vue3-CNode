@@ -1,7 +1,7 @@
 <!--
  * @Author: 黄灿民
  * @Date: 2021-02-08 10:32:38
- * @LastEditTime: 2021-02-10 16:17:51
+ * @LastEditTime: 2021-02-15 16:21:59
  * @LastEditors: 黄灿民
  * @Description: 
  * @FilePath: \cnode\src\components\header\CNodeHeader.vue
@@ -49,6 +49,7 @@ import { useStore } from "vuex";
 import SearchBox from "../search-box/SearchBox.vue";
 
 export default defineComponent({
+  name:'Header',
   components: { SearchBox },
   setup() {
     const store = useStore();

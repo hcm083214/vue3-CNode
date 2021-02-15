@@ -1,7 +1,7 @@
 <!--
  * @Author: 黄灿民
  * @Date: 2021-02-09 16:04:57
- * @LastEditTime: 2021-02-14 17:04:36
+ * @LastEditTime: 2021-02-15 16:25:51
  * @LastEditors: 黄灿民
  * @Description: 
  * @FilePath: \cnode\src\views\topic\Topic.vue
@@ -129,6 +129,7 @@ import { timeFormat, tag, tabToName, isLoginFn } from "@/util/common.ts";
 import collect from "./collect";
 import SideBar from "@/components/siderbar/SideBar.vue";
 export default defineComponent({
+  name:'Topic',
   components: { SideBar },
   setup() {
     const route = useRoute();

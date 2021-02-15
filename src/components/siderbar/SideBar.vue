@@ -1,7 +1,7 @@
 <!--
  * @Author: 黄灿民
  * @Date: 2021-02-13 13:29:49
- * @LastEditTime: 2021-02-14 11:06:27
+ * @LastEditTime: 2021-02-15 16:21:11
  * @LastEditors: 黄灿民
  * @Description: 
  * @FilePath: \cnode\src\components\siderbar\SideBar.vue
@@ -62,6 +62,7 @@ export const defaultAvatar =
   "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAMAAAACAQMAAACnuvRZAAAAA1BMVEX29vYACyOqAAAACklEQVQI12MAAgAABAABINItbwAAAABJRU5ErkJggg==";
 
 export default defineComponent({
+  name: "SideBar",
   props: {
     from: {
       type: String,

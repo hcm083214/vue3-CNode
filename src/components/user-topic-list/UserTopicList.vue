@@ -1,7 +1,7 @@
 <!--
  * @Author: 黄灿民
  * @Date: 2021-02-15 14:22:40
- * @LastEditTime: 2021-02-15 15:08:01
+ * @LastEditTime: 2021-02-15 16:22:52
  * @LastEditors: 黄灿民
  * @Description: 
  * @FilePath: \cnode\src\components\user-topic-list\UserTopicList.vue
@@ -36,6 +36,7 @@ import { timeFormat } from "@/util/common";
 import { defineComponent } from "vue";
 
 export default defineComponent({
+  name:'UserTopicList',
   props: {
     topics: {
       type: Array,

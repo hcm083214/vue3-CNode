@@ -1,7 +1,7 @@
 <!--
  * @Author: 黄灿民
  * @Date: 2021-02-08 22:19:26
- * @LastEditTime: 2021-02-14 10:31:33
+ * @LastEditTime: 2021-02-15 16:23:27
  * @LastEditors: 黄灿民
  * @Description: 
  * @FilePath: \cnode\src\views\home\Home.vue
@@ -88,6 +88,7 @@ interface TopicsData {
   all: Array<object>;
 }
 export default defineComponent({
+  name:'Home',
   components: { TopicsList, SideBar },
   setup() {
     const route = useRoute();

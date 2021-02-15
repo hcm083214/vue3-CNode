@@ -1,7 +1,7 @@
 <!--
  * @Author: 黄灿民
  * @Date: 2021-02-08 15:30:51
- * @LastEditTime: 2021-02-10 16:29:55
+ * @LastEditTime: 2021-02-15 16:23:41
  * @LastEditors: 黄灿民
  * @Description: 
  * @FilePath: \cnode\src\views\login\Login.vue
@@ -34,6 +34,7 @@ import { useStore } from "vuex";
 import { useRouter } from "vue-router";
 
 export default defineComponent({
+  name:'Login',
   setup() {
     const store = useStore();
     const router = useRouter();

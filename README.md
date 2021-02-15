@@ -1,4 +1,84 @@
-# cnode
+# vue3-CNode
+
+- 基于[vue-cnode](https://github.com/xjh22222228/vue-cnode)进行改造
+- 使用vue3 composition API代替options API
+- 利用typescript进行类型申明
+
+## 开发技术
+
+```js
+  "dependencies": {
+    "element3": "0.0.39",
+    "vue": "^3.0.0",
+    "vue-router": "^4.0.0-0",
+    "vuex": "^4.0.0-0",
+    "axios": "^0.18.0",
+  },
+  "devDependencies": {
+    "sass": "^1.26.5",
+    "typescript": "~3.9.3",
+  }
+```
+
+## 目录结构
+
+```js
+|-- vue3-CNode 
+    |-- vue.config.js  # 代理设置
+    |-- src
+        |-- App.vue
+        |-- main.ts
+        |-- shims-vue.d.ts
+        |-- assets
+        |   |-- github.svg
+        |   |-- index.css # css样式初始化
+        |   |-- logo.png
+        |   |-- mixin.scss # 公共样式
+        |   |-- not-match.gif
+        |   |-- icon
+        |       |-- iconfont.js # svg图标，因ts关系未启用
+        |-- components
+        |   |-- footer
+        |   |   |-- CNodeFooter.vue # 页脚
+        |   |-- header
+        |   |   |-- CNodeHeader.vue # 头部
+        |   |-- msg
+        |   |   |-- msg.vue # 消息列表
+        |   |-- siderbar
+        |   |   |-- SideBar.vue # 侧边栏
+        |   |-- topics-list
+        |   |   |-- TopicsList.vue # 话题列表
+        |   |-- user-topic-list
+        |       |-- UserTopicList.vue # 用户相关话题列表
+        |-- router
+        |   |-- index.ts # 路由配置
+        |-- server
+        |   |-- api.ts # 后端接口
+        |   |-- index.ts # 后端请求
+        |-- store
+        |   |-- index.ts # store配置
+        |-- util
+        |   |-- common.ts # 公共函数
+        |-- views
+            |-- 404
+            |   |-- 404.vue # 404页面
+            |-- create
+            |   |-- Create.vue # 新建话题页面
+            |-- home
+            |   |-- Home.vue # 首页
+            |-- login
+            |   |-- Login.vue # 登录页
+            |-- message
+            |   |-- Message.vue # 未读消息页面
+            |-- topic
+            |   |-- collect.ts
+            |   |-- like.ts
+            |   |-- Topic.vue # 话题详情页
+            |-- user
+                |-- User.vue # 用户详情页
+```
+
+
 
 ## 登录逻辑
 

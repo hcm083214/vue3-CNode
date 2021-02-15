@@ -1,7 +1,7 @@
 <!--
  * @Author: 黄灿民
  * @Date: 2021-02-08 10:34:54
- * @LastEditTime: 2021-02-15 15:24:56
+ * @LastEditTime: 2021-02-15 16:21:41
  * @LastEditors: 黄灿民
  * @Description: 
  * @FilePath: \cnode\src\components\footer\CNodeFooter.vue
@@ -53,6 +53,7 @@
 import { defineComponent } from "vue";
 
 export default defineComponent({
+  name:'Footer',
   setup() {
     return {};
   },
@@ -64,7 +65,7 @@ export default defineComponent({
 .footer {
   padding: 25px 0 35px 0;
   background: #fff;
-
+  margin-top:10px;
   .footer-box {
     width: 90%;
     margin: 0 auto;

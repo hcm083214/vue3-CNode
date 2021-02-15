@@ -1,7 +1,7 @@
 <!--
  * @Author: 黄灿民
  * @Date: 2021-02-10 16:02:29
- * @LastEditTime: 2021-02-10 19:53:32
+ * @LastEditTime: 2021-02-15 16:24:05
  * @LastEditors: 黄灿民
  * @Description: 
  * @FilePath: \cnode\src\views\message\Message.vue
@@ -31,6 +31,7 @@ import { getMessages } from "@/server";
 import { defineComponent, ref } from "vue";
 import Msg from "@/components/msg/msg.vue";
 export default defineComponent({
+  name:'Message',
   components: { Msg },
   setup() {
     const message = ref();
