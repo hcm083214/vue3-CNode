@@ -1,7 +1,7 @@
 <!--
  * @Author: 黄灿民
  * @Date: 2021-02-14 11:06:45
- * @LastEditTime: 2021-02-15 16:23:12
+ * @LastEditTime: 2021-02-19 22:50:12
  * @LastEditors: 黄灿民
  * @Description: 新建话题
  * @FilePath: \cnode\src\views\create\Create.vue
@@ -94,8 +94,8 @@ export default defineComponent({
         //   "🚀 ~ file: Create.vue ~ line 91 ~ getTopicData ~ res",
         //   res
         // );
-        content.value = res.content;
-        title.value = res.title;
+        content.value = res.data.content;
+        title.value = res.data.title;
       });
     });
 
@@ -123,7 +123,7 @@ export default defineComponent({
           tab: tab.value,
           content: content.value,
           // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        }).then((res) => {
+        }).then(() => {
           router.push({
             name: "Home",
             query: {

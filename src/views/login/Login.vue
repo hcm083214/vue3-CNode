@@ -1,7 +1,7 @@
 <!--
  * @Author: 黄灿民
  * @Date: 2021-02-08 15:30:51
- * @LastEditTime: 2021-02-15 16:23:41
+ * @LastEditTime: 2021-02-20 22:26:50
  * @LastEditors: 黄灿民
  * @Description: 
  * @FilePath: \cnode\src\views\login\Login.vue
@@ -28,28 +28,35 @@
 </template>
 
 <script lang="ts">
+// import { asyncLogin } from "@/util/common";
 import { defineComponent, ref } from "vue";
-import { login } from "@/server/index.ts";
-import { useStore } from "vuex";
 import { useRouter } from "vue-router";
-
+import { useStore } from "vuex";
+interface LoginParams {
+  isRequireLogin: boolean;
+}
 export default defineComponent({
   name:'Login',
   setup() {
-    const store = useStore();
+    const store = useStore(); 
     const router = useRouter();
-    const saveUserInfo = (userInfo: object) =>
-      store.commit("saveUserInfo", userInfo);
+    // const saveUserInfo = (userInfo: object) =>
+    //   store.commit("saveUserInfo", userInfo);
+
+    // const asyncLogin = (isRequireLogin: boolean)=>store.dispatch('login',{
+    //   isRequireLogin
+    // }); 
+    const asyncLogin =(options: LoginParams)=> store.dispatch('login',options)
     const accessToken = ref(localStorage.getItem('accessToken') || '');
-    
-    const handleLogin = async () => {
-      const userInfo = await login(accessToken.value);
-      saveUserInfo(userInfo);
+    const handleLogin = () => {
       localStorage.setItem('accessToken',accessToken.value)
-      localStorage.setItem('userInfo',JSON.stringify(userInfo))
+      asyncLogin({
+        isRequireLogin:false
+      }).then(()=>{
         router.push({
-            name:'Home'
+          name:"Home"
         })
+      })
     };
     return { accessToken, handleLogin };
   },

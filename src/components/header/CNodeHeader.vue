@@ -1,7 +1,7 @@
 <!--
  * @Author: 黄灿民
  * @Date: 2021-02-08 10:32:38
- * @LastEditTime: 2021-02-15 16:21:59
+ * @LastEditTime: 2021-02-20 22:09:33
  * @LastEditors: 黄灿民
  * @Description: 
  * @FilePath: \cnode\src\components\header\CNodeHeader.vue
@@ -49,18 +49,22 @@ import { useStore } from "vuex";
 import SearchBox from "../search-box/SearchBox.vue";
 
 export default defineComponent({
-  name:'Header',
+  name: "Header",
   components: { SearchBox },
   setup() {
     const store = useStore();
-    const isLogin = isLoginFn();
+    const isLogin = ref(false);
+    isLoginFn().then((res) => (isLogin.value = res));
+
     const handleLogout = () => {
+      localStorage.removeItem("userInfo");
+      localStorage.removeItem("accessToken");
       store.commit("saveUserInfo", {});
-      localStorage.removeItem('userInfo');
-      localStorage.removeItem('accessToken');
-    }
+      isLoginFn().then((res) => (isLogin.value = res));
+    };
     const messageCount = ref();
-    getMessageCount().then((res) => (messageCount.value = res));
+    isLogin.value &&
+      getMessageCount().then((res) => (messageCount.value = res.data));
     return {
       handleLogout,
       isLogin,

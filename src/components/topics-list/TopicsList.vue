@@ -1,7 +1,7 @@
 <!--
  * @Author: 黄灿民
  * @Date: 2021-02-09 15:47:02
- * @LastEditTime: 2021-02-15 16:22:33
+ * @LastEditTime: 2021-02-20 22:41:38
  * @LastEditors: 黄灿民
  * @Description: 
  * @FilePath: \cnode\src\components\topics-list\TopicsList.vue
@@ -53,7 +53,7 @@ interface TopicsData {
 }
 
 export default defineComponent({
-  name:'TopicsList',
+  name: "TopicsList",
   props: {
     topics: {
       type: Object as PropType<TopicsData>,

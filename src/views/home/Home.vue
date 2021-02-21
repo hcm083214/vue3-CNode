@@ -1,7 +1,7 @@
 <!--
  * @Author: 黄灿民
  * @Date: 2021-02-08 22:19:26
- * @LastEditTime: 2021-02-15 16:23:27
+ * @LastEditTime: 2021-02-20 22:39:08
  * @LastEditors: 黄灿民
  * @Description: 
  * @FilePath: \cnode\src\views\home\Home.vue
@@ -49,7 +49,7 @@
           <div class="mark-line"></div>
           <div class="mark-line"></div>
         </div>
-        <topics-list :topics="topicsData" />
+        <topics-list :topics="topicsData" :loading="isShowMark" />
       </div>
       <div class="pagination-box">
         <el-pagination
@@ -67,7 +67,6 @@
         </Page> -->
       </div>
     </div>
-    <!-- <Sidebar /> -->
   </section>
   <side-bar />
 </template>
@@ -76,7 +75,7 @@
 import SideBar from "@/components/siderbar/SideBar.vue";
 import TopicsList from "@/components/topics-list/TopicsList.vue";
 import { getTopicsData } from "@/server";
-import { defineComponent, onMounted, reactive, ref, watchEffect } from "vue";
+import { defineComponent, reactive, ref, watchEffect } from "vue";
 import { useRoute } from "vue-router";
 type TabList = "ask" | "share" | "job" | "good" | "dev" | "all";
 interface TopicsData {
@@ -88,7 +87,7 @@ interface TopicsData {
   all: Array<object>;
 }
 export default defineComponent({
-  name:'Home',
+  name: "Home",
   components: { TopicsList, SideBar },
   setup() {
     const route = useRoute();
@@ -102,36 +101,27 @@ export default defineComponent({
       dev: [],
       all: [],
     });
-    watchEffect(async () => {
-      const tab = (route.query.tab as TabList) || "all";
-      isShowMark.value = true;
-      topicsData[tab] = await getTopicsData({
-        limit: 40,
-        mdrender: false,
-        tab: (route.query.tab as TabList) || "all",
-        page: currentPage.value,
-      });
-      // console.log("🚀 ~ file: HomeMain.vue ~ line 99 ~ watchEffect ~ topicsData[tab]", topicsData[tab])
-      isShowMark.value = false;
-    });
-    onMounted(async () => {
-      const tab = (route.query.tab as TabList) || "all";
-      isShowMark.value = true;
-      topicsData[tab] = await getTopicsData({
-        limit: 40,
-        mdrender: false,
-        tab: (route.query.tab as TabList) || "all",
-        page: 1,
-      });
 
-      isShowMark.value = false;
+    watchEffect(() => {
+      const tab = (route.query.tab as TabList) || "all";
+      console.log("🚀 ~ file: Home.vue ~ line 109 ~ watchEffect ~ tab", tab)
+      isShowMark.value = true;
+      getTopicsData({
+        limit: 40,
+        mdrender: false,
+        tab,
+        page: 1,
+      }).then((res) => {
+        isShowMark.value = false;
+        topicsData[tab] = res.data;
+      });
     });
 
     const handleCurrentChange = (page: number) => {
       console.log(`当前页: ${page}`);
       currentPage.value = page;
     };
-    return { isShowMark, topicsData, handleCurrentChange,currentPage };
+    return { isShowMark, topicsData, handleCurrentChange, currentPage };
   },
 });
 </script>

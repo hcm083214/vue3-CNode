@@ -1,7 +1,7 @@
 <!--
  * @Author: 黄灿民
  * @Date: 2021-02-09 16:04:57
- * @LastEditTime: 2021-02-15 16:25:51
+ * @LastEditTime: 2021-02-19 23:10:47
  * @LastEditors: 黄灿民
  * @Description: 
  * @FilePath: \cnode\src\views\topic\Topic.vue
@@ -123,11 +123,12 @@
 
 <script lang="ts">
 import { getTopicData, likeServe } from "@/server";
-import { defineComponent, ref } from "vue";
+import { computed, defineComponent, ref } from "vue";
 import { useRoute } from "vue-router";
 import { timeFormat, tag, tabToName, isLoginFn } from "@/util/common.ts";
 import collect from "./collect";
 import SideBar from "@/components/siderbar/SideBar.vue";
+import { useStore } from "vuex";
 export default defineComponent({
   name:'Topic',
   components: { SideBar },
@@ -135,14 +136,14 @@ export default defineComponent({
     const route = useRoute();
     const detail = ref();
     const loading = ref(true);
+    const store = useStore();
 
     const userInfo = ref();
-    userInfo.value =
-      localStorage.getItem("userInfo") &&
-      JSON.parse(localStorage.getItem("userInfo") as string);
+    userInfo.value = computed(()=>store.state.userInfo)
+
     getTopicData(route.params.id as string).then((res) => {
       loading.value = false;
-      detail.value = res;
+      detail.value = res.data;
       // console.log(
       //   "🚀 ~ file: Topic.vue ~ line 97 ~ getTopicData ~ detail.value",
       //   detail.value
@@ -154,7 +155,7 @@ export default defineComponent({
     const { handleCollectionButton } = collect;
     const handleLikeButton = (id: string, index: string) => {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      likeServe(id).then((res) => {
+      likeServe(id).then(() => {
         // eslint-disable-next-line @typescript-eslint/camelcase
         detail.value.replies[index].is_uped = !detail.value.replies[index]
           .is_uped;

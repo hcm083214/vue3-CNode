@@ -4,7 +4,7 @@
 <!--
  * @Author: 黄灿民
  * @Date: 2021-02-09 16:01:55
- * @LastEditTime: 2021-02-15 16:26:07
+ * @LastEditTime: 2021-02-19 22:52:08
  * @LastEditors: 黄灿民
  * @Description: 
  * @FilePath: \cnode\src\views\user\User.vue
@@ -61,7 +61,7 @@ export default defineComponent({
     const user = ref();
     const loginname = route.params.loginname as string;
     getUserInfoServe(loginname).then((res) => {
-      user.value = res.data;
+      user.value = res.data.data;
     });
     return { timeFormat, user };
   },

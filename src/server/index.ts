@@ -1,7 +1,7 @@
 /*
  * @Author: 黄灿民
  * @Date: 2021-02-08 15:53:28
- * @LastEditTime: 2021-02-15 13:51:51
+ * @LastEditTime: 2021-02-18 11:08:39
  * @LastEditors: 黄灿民
  * @Description: 
  * @FilePath: \cnode\src\server\index.ts
@@ -30,7 +30,7 @@ instance.interceptors.request.use((config) => {
     return config;
 })
 instance.interceptors.response.use(
-    res => res.data,
+    res => res,
     err => {
         let result
         const statusCode = err.response.status;
@@ -51,7 +51,7 @@ instance.interceptors.response.use(
     }
 )
 
-interface LoginResult { success: boolean; loginname?: string; id?: number; avatar_url?: string }
+interface LoginResult { success?: boolean; loginname?: string; id?: number; avatar_url?: string }
 export async function login(token: string) {
     const result = await instance.post<LoginResult>(API.login, {
         accesstoken: token

@@ -1,10 +1,11 @@
-import { computed } from "vue";
+import { login as loginServe } from "@/server";
+import { useRouter } from "vue-router";
 import { useStore } from "vuex";
 
 /*
  * @Author: 黄灿民
  * @Date: 2021-02-09 22:06:52
- * @LastEditTime: 2021-02-13 14:38:30
+ * @LastEditTime: 2021-02-20 22:33:23
  * @LastEditors: 黄灿民
  * @Description: 
  * @FilePath: \cnode\src\util\common.ts
@@ -94,15 +95,40 @@ export function tabToName(tab: string) {
         case 'dev': return '测试'
     }
 }
+interface LoginParams {
+    isRequireLogin: boolean;
+}
+// interface LoginResult { success?: boolean; loginname?: string; id?: number; avatar_url?: string }
+// export async function asyncLogin(options: LoginParams) {
+//     const router = useRouter();
+//     const store = useStore();
+//     const accessToken = localStorage.getItem('accessToken') as string;
+//     const saveUserInfo = (userInfo: LoginResult) => store.commit('saveUserInfo', userInfo);
+//     if (accessToken) {
+//         const result = await loginServe(accessToken)
+//         saveUserInfo(result.data)
+//     } else {
+//         options.isRequireLogin ?
+//             router.push({
+//                 name: "Login"
+//             }) : ''
+//     }
+// }
 
-export function isLoginFn(){
-    const userInfo = JSON.parse(localStorage.getItem("userInfo") as string);
+export async function isLoginFn(isRequireLogin = false) {
     const store = useStore();
-    const isLogin = computed<boolean>(
-      () =>
-        !!Object.keys(store.state.userInfo).length ||
-        (userInfo && !!Object.keys(userInfo).length) ||
-        false
-    );
+    let isLogin = false
+    const accessToken = localStorage.getItem('accessToken') as string;
+    const asyncLogin =(options: LoginParams)=> store.dispatch('login',options)
+    if (!accessToken) {
+        store.commit('saveAccessToken', '');
+        isLogin = false
+    } else {
+        store.commit('saveAccessToken', accessToken);
+        await asyncLogin({
+            isRequireLogin
+        });
+        isLogin = true;
+    }
     return isLogin
 } 

@@ -1,17 +1,18 @@
 <!--
  * @Author: 黄灿民
  * @Date: 2021-02-13 13:29:49
- * @LastEditTime: 2021-02-15 16:21:11
+ * @LastEditTime: 2021-02-20 22:35:15
  * @LastEditors: 黄灿民
  * @Description: 
  * @FilePath: \cnode\src\components\siderbar\SideBar.vue
 -->
 <template>
   <aside class="sidebar">
+    {{ isLogin }}
     <div class="personal-information side-bar">
       <div v-if="propsFrom !== 'topic'">
         <div v-if="isLogin">
-          <div class="top user-select-none">个人信息</div>
+          <div class="top user-select-none">本人信息</div>
           <div class="info user-select-none">
             <router-link
               :to="{ name: 'User', params: { loginname: userInfo.loginname } }"
@@ -57,7 +58,8 @@
 
 <script lang="ts">
 import { isLoginFn } from "@/util/common";
-import { defineComponent, ref } from "vue";
+import { computed, defineComponent, ref } from "vue";
+import { useStore } from "vuex";
 export const defaultAvatar =
   "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAMAAAACAQMAAACnuvRZAAAAA1BMVEX29vYACyOqAAAACklEQVQI12MAAgAABAABINItbwAAAABJRU5ErkJggg==";
 
@@ -79,9 +81,12 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const isLogin = isLoginFn();
-    const userInfo = ref();
-    userInfo.value = JSON.parse(localStorage.getItem("userInfo") as string);
+    const isLogin = ref(false);
+    isLoginFn().then((res) => (isLogin.value = res));
+    const store = useStore();
+    const userInfo = computed(() => store.state.userInfo);
+    // const userInfo = ref();
+    // userInfo.value = JSON.parse(localStorage.getItem("userInfo") as string);
     return {
       isLogin,
       userInfo,
