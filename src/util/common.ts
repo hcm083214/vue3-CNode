@@ -1,11 +1,11 @@
-import { login as loginServe } from "@/server";
-import { useRouter } from "vue-router";
-import { useStore } from "vuex";
+// import { login as loginServe } from "@/server";
+// import { useRouter } from "vue-router";
+import { Store } from "vuex";
 
 /*
  * @Author: 黄灿民
  * @Date: 2021-02-09 22:06:52
- * @LastEditTime: 2021-02-20 22:33:23
+ * @LastEditTime: 2021-02-21 10:11:22
  * @LastEditors: 黄灿民
  * @Description: 
  * @FilePath: \cnode\src\util\common.ts
@@ -115,11 +115,10 @@ interface LoginParams {
 //     }
 // }
 
-export async function isLoginFn(isRequireLogin = false) {
-    const store = useStore();
+export async function isLoginFn(store: Store<any>, isRequireLogin = false) {
     let isLogin = false
     const accessToken = localStorage.getItem('accessToken') as string;
-    const asyncLogin =(options: LoginParams)=> store.dispatch('login',options)
+    const asyncLogin = (options: LoginParams) => store.dispatch('login', options)
     if (!accessToken) {
         store.commit('saveAccessToken', '');
         isLogin = false

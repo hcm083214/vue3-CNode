@@ -1,7 +1,7 @@
 <!--
  * @Author: 黄灿民
  * @Date: 2021-02-08 15:30:51
- * @LastEditTime: 2021-02-20 22:26:50
+ * @LastEditTime: 2021-02-21 09:48:58
  * @LastEditors: 黄灿民
  * @Description: 
  * @FilePath: \cnode\src\views\login\Login.vue
@@ -40,12 +40,6 @@ export default defineComponent({
   setup() {
     const store = useStore(); 
     const router = useRouter();
-    // const saveUserInfo = (userInfo: object) =>
-    //   store.commit("saveUserInfo", userInfo);
-
-    // const asyncLogin = (isRequireLogin: boolean)=>store.dispatch('login',{
-    //   isRequireLogin
-    // }); 
     const asyncLogin =(options: LoginParams)=> store.dispatch('login',options)
     const accessToken = ref(localStorage.getItem('accessToken') || '');
     const handleLogin = () => {

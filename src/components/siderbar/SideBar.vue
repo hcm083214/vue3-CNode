@@ -1,7 +1,7 @@
 <!--
  * @Author: 黄灿民
  * @Date: 2021-02-13 13:29:49
- * @LastEditTime: 2021-02-21 09:01:12
+ * @LastEditTime: 2021-02-21 10:11:00
  * @LastEditors: 黄灿民
  * @Description: 
  * @FilePath: \cnode\src\components\siderbar\SideBar.vue
@@ -57,7 +57,8 @@
 
 <script lang="ts">
 import { isLoginFn } from "@/util/common";
-import { computed, defineComponent, ref } from "vue";
+import { computed, defineComponent, ref, watchEffect } from "vue";
+import { useRoute } from "vue-router";
 import { useStore } from "vuex";
 export const defaultAvatar =
   "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAMAAAACAQMAAACnuvRZAAAAA1BMVEX29vYACyOqAAAACklEQVQI12MAAgAABAABINItbwAAAABJRU5ErkJggg==";
@@ -80,9 +81,14 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const isLogin = ref(false);
-    isLoginFn().then((res) => (isLogin.value = res));
     const store = useStore();
+    const isLogin = ref(false);
+    const route =useRoute();
+    isLoginFn(store).then((res) => (isLogin.value = res));
+    watchEffect(() => {
+      //通过监控route变化，解决登录退出登录状态后仍显示本人信息的bug
+      route.path=='/' && isLoginFn(store).then((res) => (isLogin.value = res));
+    });
     const userInfo = computed(() => store.state.userInfo);
     // const userInfo = ref();
     // userInfo.value = JSON.parse(localStorage.getItem("userInfo") as string);

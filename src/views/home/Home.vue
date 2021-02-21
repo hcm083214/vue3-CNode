@@ -1,7 +1,7 @@
 <!--
  * @Author: 黄灿民
  * @Date: 2021-02-08 22:19:26
- * @LastEditTime: 2021-02-20 22:39:08
+ * @LastEditTime: 2021-02-21 09:24:10
  * @LastEditors: 黄灿民
  * @Description: 
  * @FilePath: \cnode\src\views\home\Home.vue
@@ -104,7 +104,6 @@ export default defineComponent({
 
     watchEffect(() => {
       const tab = (route.query.tab as TabList) || "all";
-      console.log("🚀 ~ file: Home.vue ~ line 109 ~ watchEffect ~ tab", tab)
       isShowMark.value = true;
       getTopicsData({
         limit: 40,

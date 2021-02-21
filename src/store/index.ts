@@ -1,7 +1,7 @@
 /*
  * @Author: 黄灿民
  * @Date: 2021-02-08 11:25:51
- * @LastEditTime: 2021-02-20 22:36:21
+ * @LastEditTime: 2021-02-21 09:49:35
  * @LastEditors: 黄灿民
  * @Description: 
  * @FilePath: \cnode\src\store\index.ts
@@ -30,17 +30,17 @@ export default createStore({
   },
   actions: {
     login({ commit, state }, options: LoginParams) {
-      const router = useRouter(); 
+      // const router = useRouter(); 
       state.accessToken = localStorage.getItem('accessToken') as string;
       if (state.accessToken) {
         loginServe(state.accessToken).then(res => {
           commit('saveUserInfo', res.data);
         })
       } else {
-        options.isRequireLogin ?
-          router.push({
-            name: "Login"
-          }) : ''
+        // options.isRequireLogin ?
+        //   router.push({
+        //     name: "Login"
+        //   }) : ''
       }
     }
   },

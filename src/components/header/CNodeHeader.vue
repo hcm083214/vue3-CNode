@@ -1,7 +1,7 @@
 <!--
  * @Author: 黄灿民
  * @Date: 2021-02-08 10:32:38
- * @LastEditTime: 2021-02-20 22:09:33
+ * @LastEditTime: 2021-02-21 10:06:05
  * @LastEditors: 黄灿民
  * @Description: 
  * @FilePath: \cnode\src\components\header\CNodeHeader.vue
@@ -44,7 +44,8 @@
 <script lang="ts">
 import { getMessageCount } from "@/server";
 import { isLoginFn } from "@/util/common";
-import { defineComponent, ref } from "vue";
+import { defineComponent, ref, watchEffect } from "vue";
+import { useRoute } from "vue-router";
 import { useStore } from "vuex";
 import SearchBox from "../search-box/SearchBox.vue";
 
@@ -54,13 +55,18 @@ export default defineComponent({
   setup() {
     const store = useStore();
     const isLogin = ref(false);
-    isLoginFn().then((res) => (isLogin.value = res));
+    const route = useRoute();
+    isLoginFn(store).then((res) => (isLogin.value = res));
+    watchEffect(() => {
+      //通过监控route变化，解决登录完成后跳转到首页登录状态不改变的bug
+      route.path=='/' && isLoginFn(store).then((res) => (isLogin.value = res));
+    });
 
     const handleLogout = () => {
       localStorage.removeItem("userInfo");
       localStorage.removeItem("accessToken");
       store.commit("saveUserInfo", {});
-      isLoginFn().then((res) => (isLogin.value = res));
+      isLoginFn(store).then((res) => (isLogin.value = res));
     };
     const messageCount = ref();
     isLogin.value &&

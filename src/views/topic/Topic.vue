@@ -1,7 +1,7 @@
 <!--
  * @Author: 黄灿民
  * @Date: 2021-02-09 16:04:57
- * @LastEditTime: 2021-02-19 23:10:47
+ * @LastEditTime: 2021-02-21 09:33:09
  * @LastEditors: 黄灿民
  * @Description: 
  * @FilePath: \cnode\src\views\topic\Topic.vue
@@ -150,7 +150,7 @@ export default defineComponent({
       // );
     });
 
-    const isLogin = isLoginFn();
+    const isLogin = isLoginFn(store);
 
     const { handleCollectionButton } = collect;
     const handleLikeButton = (id: string, index: string) => {
