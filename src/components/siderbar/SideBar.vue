@@ -1,14 +1,13 @@
 <!--
  * @Author: 黄灿民
  * @Date: 2021-02-13 13:29:49
- * @LastEditTime: 2021-02-20 22:35:15
+ * @LastEditTime: 2021-02-21 09:01:12
  * @LastEditors: 黄灿民
  * @Description: 
  * @FilePath: \cnode\src\components\siderbar\SideBar.vue
 -->
 <template>
   <aside class="sidebar">
-    {{ isLogin }}
     <div class="personal-information side-bar">
       <div v-if="propsFrom !== 'topic'">
         <div v-if="isLogin">
