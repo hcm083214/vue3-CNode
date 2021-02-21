@@ -5,7 +5,7 @@ import { Store } from "vuex";
 /*
  * @Author: 黄灿民
  * @Date: 2021-02-09 22:06:52
- * @LastEditTime: 2021-02-21 10:11:22
+ * @LastEditTime: 2021-02-21 14:52:31
  * @LastEditors: 黄灿民
  * @Description: 
  * @FilePath: \cnode\src\util\common.ts
@@ -14,10 +14,10 @@ export function timeFormat(time: Date) {
     const now = new Date();
     const start = new Date(time);
     const diffTime = now.getTime() - start.getTime();
-    const day = Math.floor(diffTime / (24 * 3600 * 1000));
-    const hours = Math.floor((diffTime % (24 * 3600 * 1000)) / (3600 * 1000));
-    const month = Math.floor(diffTime / (24 * 3600 * 1000) / 31);
-    const year = Math.floor(diffTime / (24 * 3600 * 1000) / 31 / 12);
+    const day = Math.round(diffTime / (24 * 3600 * 1000));
+    const hours = Math.round((diffTime % (24 * 3600 * 1000)) / (3600 * 1000));
+    const month = Math.round(diffTime / (24 * 3600 * 1000) / 31);
+    const year = Math.round(diffTime / (24 * 3600 * 1000) / 31 / 12);
     const fromNow =
         day > 365
             ? `${year}年前`
